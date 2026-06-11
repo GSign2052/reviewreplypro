@@ -267,3 +267,162 @@ textarea:focus, select:focus {
 .risk-dot.high   { background: var(--high); }
 
 .hidden { display: none !important; }
+
+/* ── How-it-works strip ─────────────────────────────────────── */
+.how-it-works {
+    max-width: 1200px;
+    margin: 1.5rem auto 0;
+    padding: 0 1.5rem;
+}
+.hiw-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.hiw-step { display: flex; align-items: center; gap: 0.55rem; flex: 1; min-width: 160px; }
+.hiw-num {
+    width: 22px; height: 22px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.68rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+}
+.hiw-label { font-size: 0.82rem; color: var(--text); }
+.hiw-arrow { color: var(--border); font-size: 0.9rem; padding: 0 0.5rem; flex-shrink: 0; }
+@media (max-width: 600px) { .hiw-arrow { display: none; } }
+
+/* ── Field label row (label + tooltip side-by-side) ─────────── */
+.field-label-row {
+    display: flex; align-items: center; gap: 0.4rem;
+    margin-bottom: 0.35rem;
+}
+.field-label-row label {
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: default;
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────── */
+.tip-wrap { position: relative; display: inline-flex; align-items: center; }
+.tip-icon {
+    width: 14px; height: 14px;
+    border: 1px solid var(--muted);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.62rem; color: var(--muted);
+    cursor: help; line-height: 1; flex-shrink: 0;
+    transition: border-color 0.12s, color 0.12s;
+}
+.tip-icon:hover, .tip-icon:focus { border-color: var(--accent); color: var(--accent); outline: none; }
+.tip-box {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 7px);
+    left: 0;
+    background: #1c1c1c;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.775rem;
+    color: var(--text);
+    width: 220px;
+    z-index: 120;
+    line-height: 1.45;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    pointer-events: none;
+}
+.tip-wrap:hover .tip-box,
+.tip-wrap:focus-within .tip-box { display: block; }
+
+/* ── Variant card – name + hint ──────────────────────────────── */
+.variant-meta { flex: 1; min-width: 0; }
+.variant-name { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text); }
+.variant-hint { display: block; font-size: 0.74rem; color: var(--muted); margin-top: 0.1rem; }
+.reply-card-header { margin-bottom: 0.7rem; }
+
+/* ── Risk wrap (badge + subtitle) ───────────────────────────── */
+.risk-wrap { margin-bottom: 1rem; }
+.risk-sub { display: block; font-size: 0.76rem; color: var(--muted); margin-top: 0.3rem; }
+
+/* ── Onboarding modal ────────────────────────────────────────── */
+.modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; padding: 1rem;
+}
+.modal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 480px; width: 100%;
+}
+.modal-title {
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 1.25rem; color: var(--text);
+}
+.modal-body { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 1.5rem; }
+.modal-row { display: flex; gap: 0.75rem; align-items: flex-start; }
+.modal-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+.modal-text { font-size: 0.875rem; color: var(--text); line-height: 1.55; }
+.modal-text strong { color: var(--accent); font-weight: 600; }
+.modal-btn {
+    width: 100%; background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 0.75rem; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; transition: opacity 0.15s;
+}
+.modal-btn:hover { opacity: 0.88; }
+
+/* ── History detail modal ────────────────────────────────────── */
+.hist-modal-card { max-width: 620px; }
+.modal-close-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.85rem;
+}
+.modal-close-label { font-size: 0.82rem; color: var(--muted); }
+.modal-close-btn {
+    background: none; border: none; color: var(--muted);
+    font-size: 1.1rem; cursor: pointer; padding: 0.1rem 0.3rem;
+    border-radius: 4px; transition: color 0.12s;
+}
+.modal-close-btn:hover { color: var(--text); }
+.hist-modal-meta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 0.85rem; font-size: 0.8rem; color: var(--muted);
+}
+.hist-modal-review {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.75rem;
+    font-size: 0.875rem; color: var(--text);
+    margin-bottom: 1.1rem; line-height: 1.6;
+    max-height: 110px; overflow-y: auto;
+}
+.hist-modal-replies { display: flex; flex-direction: column; gap: 0.75rem; max-height: 340px; overflow-y: auto; }
+.hist-modal-reply {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.85rem;
+}
+.hist-modal-reply-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.5rem;
+}
+.hist-modal-reply-name { font-size: 0.76rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.hist-modal-reply-text { font-size: 0.875rem; color: var(--text); line-height: 1.6; }
+
+/* history items clickable */
+.history-item { cursor: pointer; transition: border-color 0.15s; }
+.history-item:hover { border-color: rgba(108,99,255,0.45); }
