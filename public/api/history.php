@@ -1,6 +1,6 @@
 <?php
 
-define('ROOT', dirname(__DIR__, 2));
+require dirname(__DIR__, 2) . '/bootstrap/app.php';
 
 require ROOT . '/app/Database.php';
 require ROOT . '/app/ReviewReplyRepository.php';

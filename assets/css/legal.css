@@ -1,0 +1,109 @@
+/* ── Legal-Seiten & Account ──────────────────────────────────────────────── */
+
+.legal-main {
+    max-width: 720px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+}
+
+.legal-main h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.legal-last-updated { font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem; }
+
+.legal-placeholder-banner {
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.35);
+    color: var(--high);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.legal-placeholder-content h2 {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--text);
+}
+.legal-placeholder-content p,
+.legal-placeholder-content li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+.legal-placeholder-content ul { padding-left: 1.5rem; margin: 0.4rem 0 0.8rem; }
+.legal-placeholder-content a { color: var(--accent); }
+
+.legal-placeholder-note {
+    background: rgba(243,156,18,0.08);
+    border: 1px solid rgba(243,156,18,0.3);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: var(--medium) !important;
+    margin-top: 1.5rem;
+}
+
+/* Footer */
+.app-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding: 1.25rem 2rem;
+}
+.footer-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+.footer-brand { font-weight: 700; font-size: 0.9rem; }
+.footer-links { display: flex; gap: 1rem; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.15s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 0.78rem; color: var(--muted); margin-left: auto; }
+
+/* Account-Seite */
+.account-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.account-section h2 { font-size: 1rem; margin-bottom: 1rem; }
+.account-dsgvo {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    font-size: 0.875rem; margin-bottom: 1rem;
+}
+.account-dsgvo p { color: var(--muted); line-height: 1.55; }
+.account-dsgvo strong { color: var(--text); }
+.account-legal-note {
+    background: rgba(108,99,255,0.08);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 6px;
+    padding: 0.6rem 0.85rem;
+    color: var(--accent) !important;
+    font-size: 0.82rem !important;
+}
+.account-actions { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
+.account-action-item {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+}
+.account-action-item:last-child { border-bottom: none; padding-bottom: 0; }
+.account-action-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.15rem; }
+.account-action-desc  { font-size: 0.78rem; color: var(--muted); }
+.account-action-danger .account-action-title { color: var(--high); }
+
+.btn-danger {
+    background: rgba(231,76,60,0.12);
+    border: 1px solid rgba(231,76,60,0.4);
+    color: var(--high);
+    border-radius: 6px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }

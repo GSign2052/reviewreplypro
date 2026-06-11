@@ -1,5 +1,5 @@
 <?php
-define('ROOT', dirname(__DIR__));
+require dirname(__DIR__) . '/bootstrap/app.php';
 
 require ROOT . '/app/Auth/SessionManager.php';
 require ROOT . '/app/Auth/AuthService.php';

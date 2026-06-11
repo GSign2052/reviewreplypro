@@ -1,5 +1,5 @@
 <?php
-define('ROOT', dirname(__DIR__));
+require dirname(__DIR__) . '/bootstrap/app.php';
 
 require ROOT . '/config/security-headers.php';
 require ROOT . '/app/Auth/SessionManager.php';
@@ -236,6 +236,10 @@ $csrfToken = SessionManager::csrfToken();
     </div>
 </section>
 
+<?php include ROOT . '/public/_footer.php'; ?>
+<script src="/assets/js/floating-ui.core.min.js"></script>
+<script src="/assets/js/floating-ui.dom.min.js"></script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/tooltips.js"></script>
 </body>
 </html>

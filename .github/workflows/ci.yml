@@ -42,18 +42,23 @@ jobs:
           extensions: pdo, pdo_mysql
           coverage: none
 
-      - name: Create database config
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Create .env for CI
         run: |
-          cat > config/database.php << 'EOF'
-          <?php
-          return [
-              'host'     => '127.0.0.1',
-              'port'     => 3306,
-              'dbname'   => 'reviewreplypro_test',
-              'username' => 'rrptest',
-              'password' => 'rrptestpass',
-              'charset'  => 'utf8mb4',
-          ];
+          cat > .env << 'EOF'
+          APP_ENV=testing
+          APP_DEBUG=false
+          APP_URL=http://localhost
+          DB_HOST=127.0.0.1
+          DB_PORT=3306
+          DB_NAME=reviewreplypro_test
+          DB_USER=rrptest
+          DB_PASS=rrptestpass
+          SESSION_SECURE_COOKIE=false
+          BILLING_ENABLED=false
+          LEGAL_MODE=false
           EOF
 
       - name: Import schema
@@ -62,7 +67,12 @@ jobs:
           mysql -h 127.0.0.1 -u rrptest -prrptestpass reviewreplypro_test < database/migrate_auth.sql
 
       - name: PHP syntax check
-        run: find . -name "*.php" -not -path "./.git/*" -not -path "./vendor/*" | sort | xargs -I{} php -l {} | grep -v "No syntax errors" || true
+        run: |
+          errors=0
+          while IFS= read -r file; do
+            php -l "$file" > /dev/null 2>&1 || { echo "Syntaxfehler: $file"; errors=1; }
+          done < <(find . -name "*.php" -not -path "./.git/*" -not -path "./vendor/*" | sort)
+          exit $errors
 
       - name: Run unit tests
         run: php tests/run.php

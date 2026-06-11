@@ -40,7 +40,7 @@ nbproject/
 
 # ── PHP-Build-Artefakte ───────────────────────────────────────
 *.phar
-composer.lock
+# composer.lock absichtlich NICHT ignoriert — für Apps ist lock-File Teil des Repos
 
 # ── Test-Artefakte ────────────────────────────────────────────
 .phpunit.cache/

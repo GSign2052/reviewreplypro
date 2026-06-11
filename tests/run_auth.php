@@ -4,7 +4,7 @@
  * Testnutzer werden am Ende automatisch gelöscht.
  */
 
-define('ROOT', dirname(__DIR__));
+require dirname(__DIR__) . '/bootstrap/app.php';
 
 require ROOT . '/app/Database.php';
 require ROOT . '/app/Validator.php';

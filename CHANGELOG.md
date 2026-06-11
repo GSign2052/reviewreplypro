@@ -9,11 +9,26 @@ Versionierung folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
+### Hinzugefügt
+- **Composer + phpdotenv**: Konfiguration aus `.env` geladen; Fallback auf `config/database.php` für CI
+- **Bootstrap** `bootstrap/app.php`: zentraler App-Einstieg, globale Hilfsfunktionen `env()`, `billingEnabled()`, `legalLive()`, `appEnv()`
+- **floating-ui**: Tooltips an Branche/Ton/Sterne positionierungssicher; geführter 3-Schritt-Onboarding-Popover
+- **Stripe/Billing**: `app/Billing/StripeService.php`, `BillingRepository.php`, DB-Migration `migrate_billing.sql`
+- Billing-Seite `/billing.php` mit Feature-Flag (`BILLING_ENABLED`): Platzhalter-UI wenn false, echte Preispläne wenn true
+- API-Endpunkte: `/api/billing/create-checkout-session.php`, `/api/billing/create-portal-session.php`, `/api/webhooks/stripe.php` mit Idempotenz
+- **Admin-Bereich** `/admin/`: Übersicht, Kunden, Billing-Status, System-Info, Support — nur owner/Allowlist
+- Live-Checkliste im Admin: alle Voraussetzungen auf einen Blick
+- **Rechtliche Platzhalter**: `/impressum.php`, `/datenschutz.php`, Konto-Seite `/account.php` mit DSGVO-Hinweisen
+- Footer mit Impressum/Datenschutz/Kontakt-Links auf allen Seiten
+- **CI-Fix**: PHP-Syntax-Check schlägt jetzt wirklich fehl bei Syntaxfehlern (|| true entfernt)
+- **Tag-Fix**: v1.0.1 als Git-Tag nachgetragen (war in CHANGELOG, aber nicht getaggt)
+- `.env.example` mit vollständiger Konfigurationsdokumentation
+
 ### Geplant
-- Stripe-Integration (Abo-Modell)
-- DSGVO-Modul
 - Passwort-Reset per E-Mail
+- Konto-Löschung und Daten-Export (DSGVO)
 - Team-Accounts (mehrere Nutzer pro Organisation)
+- Rate-Limiting
 
 ---
 
