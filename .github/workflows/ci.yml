@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} / MySQL 8.0
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ["8.4"]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: rootpass
+          MYSQL_DATABASE: reviewreplypro_test
+          MYSQL_USER: rrptest
+          MYSQL_PASSWORD: rrptestpass
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo, pdo_mysql
+          coverage: none
+
+      - name: Create database config
+        run: |
+          cat > config/database.php << 'EOF'
+          <?php
+          return [
+              'host'     => '127.0.0.1',
+              'port'     => 3306,
+              'dbname'   => 'reviewreplypro_test',
+              'username' => 'rrptest',
+              'password' => 'rrptestpass',
+              'charset'  => 'utf8mb4',
+          ];
+          EOF
+
+      - name: Import schema
+        run: |
+          mysql -h 127.0.0.1 -u rrptest -prrptestpass reviewreplypro_test < database/schema.sql
+          mysql -h 127.0.0.1 -u rrptest -prrptestpass reviewreplypro_test < database/migrate_auth.sql
+
+      - name: PHP syntax check
+        run: find . -name "*.php" -not -path "./.git/*" -not -path "./vendor/*" | sort | xargs -I{} php -l {} | grep -v "No syntax errors" || true
+
+      - name: Run unit tests
+        run: php tests/run.php
+
+      - name: Run auth & integration tests
+        run: php tests/run_auth.php

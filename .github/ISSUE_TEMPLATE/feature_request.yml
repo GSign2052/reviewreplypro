@@ -1,0 +1,44 @@
+name: Feature Request
+description: Idee oder Verbesserungsvorschlag
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für den Vorschlag! Bitte beschreibe den **Anwendungsfall** — nicht nur das Feature.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Welches Problem löst das Feature?
+      description: Beschreibe den konkreten Anwendungsfall. "Als Gastronom möchte ich..."
+      placeholder: "Als Restaurant-Betreiber habe ich manchmal Bewertungen auf Englisch. Ich kann derzeit keine englischen Antworten generieren."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Welche Lösung stellst du dir vor?
+      placeholder: "Ein Sprachwahl-Dropdown im Formular, das die generierte Antwort in der gewählten Sprache ausgibt."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativen, die du in Betracht gezogen hast
+      placeholder: "Ich könnte auch die englische Bewertung auf Deutsch übersetzen, aber das ist umständlich."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Wie wichtig ist das Feature für dich?
+      options:
+        - "Nice to have"
+        - "Wichtig"
+        - "Kritisch für meine Nutzung"
+    validations:
+      required: true

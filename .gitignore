@@ -1,9 +1,51 @@
+# ── Sensible Konfiguration (NIEMALS committen) ──────────────
 config/database.php
-storage/logs/
-storage/cache/
+.env
+.env.*
+!.env.example
+
+# ── Abhängigkeiten ───────────────────────────────────────────
 vendor/
 node_modules/
-.env
+
+# ── Laufzeitdaten ─────────────────────────────────────────────
+storage/logs/
+storage/cache/
+storage/sessions/
+storage/uploads/
+
+# ── Logs ──────────────────────────────────────────────────────
 *.log
+logs/
+
+# ── Betriebssystem ────────────────────────────────────────────
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
+
+# ── IDEs und Editoren ─────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+nbproject/
+
+# ── PHP-Build-Artefakte ───────────────────────────────────────
+*.phar
+composer.lock
+
+# ── Test-Artefakte ────────────────────────────────────────────
+.phpunit.cache/
+coverage/
+
+# ── Lokale Overrides ─────────────────────────────────────────
+*.local
+docker-compose.override.yml
