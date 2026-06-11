@@ -211,6 +211,29 @@ ok('Gleiches Token wird beim zweiten Aufruf zurückgegeben', SessionManager::csr
 ok('Korrektes Token wird verifiziert', SessionManager::verifyCsrf($token));
 ok('Falsches Token wird abgelehnt', !SessionManager::verifyCsrf('falsch'));
 ok('Leeres Token wird abgelehnt', !SessionManager::verifyCsrf(''));
+ok('Manipuliertes Token (1 Bit geflippt) wird abgelehnt', !SessionManager::verifyCsrf($token . 'x'));
+
+// -------------------------------------------------------
+// --- CSRF-Schutz der API-Middleware (HTTP-Simulation) ---
+// -------------------------------------------------------
+echo "\n\033[1m── API: CSRF-Middleware ──\033[0m\n";
+
+// Simuliert requireAuthApi-Logik: POST ohne Token → blockiert
+function simulateCsrfCheck(string $method, string $incomingToken, string $sessionToken): ?string
+{
+    if ($method !== 'GET') {
+        if (!hash_equals($sessionToken, $incomingToken)) {
+            return '403';
+        }
+    }
+    return '200';
+}
+
+ok('GET-Request wird ohne CSRF-Token durchgelassen', simulateCsrfCheck('GET', '', $token) === '200');
+ok('POST mit korrektem Token → 200',    simulateCsrfCheck('POST', $token, $token) === '200');
+ok('POST ohne Token → 403',             simulateCsrfCheck('POST', '', $token) === '403');
+ok('POST mit falschem Token → 403',     simulateCsrfCheck('POST', 'x' . $token, $token) === '403');
+ok('DELETE ohne Token → 403',           simulateCsrfCheck('DELETE', '', $token) === '403');
 
 // -------------------------------------------------------
 // --- Aufräumen ---

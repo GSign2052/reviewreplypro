@@ -1,6 +1,7 @@
 (() => {
     // --- State ---
     let selectedStars = 0;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
     // --- DOM refs ---
     const reviewText    = document.getElementById('review_text');
@@ -48,7 +49,7 @@
         try {
             const res = await fetch('/api/generate-review-reply.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
                 body: JSON.stringify({
                     review_text: reviewText.value,
                     industry:    industryEl.value,
@@ -144,7 +145,7 @@
         try {
             await fetch('/api/delete-history.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
                 body: JSON.stringify({ id }),
             });
             loadHistory();

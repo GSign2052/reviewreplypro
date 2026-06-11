@@ -1,6 +1,7 @@
 <?php
 define('ROOT', dirname(__DIR__));
 
+require ROOT . '/config/security-headers.php';
 require ROOT . '/app/Database.php';
 require ROOT . '/app/Validator.php';
 require ROOT . '/app/Auth/SessionManager.php';

@@ -1,6 +1,7 @@
 <?php
 define('ROOT', dirname(__DIR__));
 
+require ROOT . '/config/security-headers.php';
 require ROOT . '/app/Auth/SessionManager.php';
 require ROOT . '/app/Middleware/requireAuth.php';
 
@@ -12,6 +13,7 @@ $csrfToken = SessionManager::csrfToken();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReviewReplyPro</title>
+    <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
         .user-nav {
