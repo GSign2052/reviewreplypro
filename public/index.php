@@ -1,3 +1,11 @@
+<?php
+define('ROOT', dirname(__DIR__));
+
+require ROOT . '/app/Auth/SessionManager.php';
+require ROOT . '/app/Middleware/requireAuth.php';
+
+$csrfToken = SessionManager::csrfToken();
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -5,6 +13,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReviewReplyPro</title>
     <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+        .user-nav span { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .user-nav form { margin: 0; }
+        .btn-logout {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--muted);
+            padding: 0.3rem 0.75rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .btn-logout:hover { border-color: var(--accent); color: var(--text); }
+    </style>
 </head>
 <body>
 
@@ -12,6 +42,16 @@
     <div class="header-inner">
         <span class="logo">ReviewReply<span class="logo-accent">Pro</span></span>
         <span class="tagline">Professionelle Google-Antworten in Sekunden</span>
+        <div class="user-nav">
+            <span title="<?= htmlspecialchars($currentUser['email'], ENT_QUOTES, 'UTF-8') ?>">
+                <?= htmlspecialchars($currentUser['email'], ENT_QUOTES, 'UTF-8') ?>
+            </span>
+            <form method="POST" action="/logout.php">
+                <input type="hidden" name="csrf_token"
+                       value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                <button type="submit" class="btn-logout">Abmelden</button>
+            </form>
+        </div>
     </div>
 </header>
 

@@ -38,4 +38,55 @@ class Validator
     {
         return $this->errors;
     }
+
+    public function validateRegisterInput(array $data): bool
+    {
+        $this->errors = [];
+
+        $email = trim($data['email'] ?? '');
+        if ($email === '') {
+            $this->errors[] = 'E-Mail-Adresse ist erforderlich.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->errors[] = 'E-Mail-Adresse ist ungültig.';
+        } elseif (mb_strlen($email) > 255) {
+            $this->errors[] = 'E-Mail-Adresse ist zu lang.';
+        }
+
+        $password = $data['password'] ?? '';
+        if (mb_strlen($password) < 8) {
+            $this->errors[] = 'Passwort muss mindestens 8 Zeichen lang sein.';
+        }
+
+        $confirm = $data['password_confirm'] ?? '';
+        if ($password !== $confirm) {
+            $this->errors[] = 'Passwörter stimmen nicht überein.';
+        }
+
+        $orgName = trim($data['org_name'] ?? '');
+        if (mb_strlen($orgName) < 2) {
+            $this->errors[] = 'Unternehmensname muss mindestens 2 Zeichen lang sein.';
+        } elseif (mb_strlen($orgName) > 100) {
+            $this->errors[] = 'Unternehmensname ist zu lang (max. 100 Zeichen).';
+        }
+
+        return empty($this->errors);
+    }
+
+    public function validateLoginInput(array $data): bool
+    {
+        $this->errors = [];
+
+        $email = trim($data['email'] ?? '');
+        if ($email === '') {
+            $this->errors[] = 'E-Mail-Adresse ist erforderlich.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->errors[] = 'E-Mail-Adresse ist ungültig.';
+        }
+
+        if (($data['password'] ?? '') === '') {
+            $this->errors[] = 'Passwort ist erforderlich.';
+        }
+
+        return empty($this->errors);
+    }
 }

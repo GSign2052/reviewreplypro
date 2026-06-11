@@ -13,10 +13,11 @@ class ReviewReplyRepository
     {
         $stmt = $this->db->prepare(
             'INSERT INTO review_replies
-             (review_text, industry, stars, tone, reply_1, reply_2, reply_3, risk_level)
-             VALUES (:review_text, :industry, :stars, :tone, :reply_1, :reply_2, :reply_3, :risk_level)'
+             (org_id, review_text, industry, stars, tone, reply_1, reply_2, reply_3, risk_level)
+             VALUES (:org_id, :review_text, :industry, :stars, :tone, :reply_1, :reply_2, :reply_3, :risk_level)'
         );
         $stmt->execute([
+            ':org_id'      => (int)$data['org_id'],
             ':review_text' => $data['review_text'],
             ':industry'    => $data['industry'],
             ':stars'       => (int)$data['stars'],
@@ -30,24 +31,26 @@ class ReviewReplyRepository
         return (int)$this->db->lastInsertId();
     }
 
-    public function getHistory(int $limit = 20): array
+    public function getHistory(int $orgId, int $limit = 20): array
     {
         $stmt = $this->db->prepare(
             'SELECT id, review_text, industry, stars, tone, reply_1, reply_2, reply_3, risk_level, created_at
              FROM review_replies
+             WHERE org_id = :org_id
              ORDER BY created_at DESC
              LIMIT :limit'
         );
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':org_id', $orgId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit',  $limit,  PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetchAll();
     }
 
-    public function delete(int $id): bool
+    public function delete(int $id, int $orgId): bool
     {
-        $stmt = $this->db->prepare('DELETE FROM review_replies WHERE id = :id');
-        $stmt->execute([':id' => $id]);
+        $stmt = $this->db->prepare('DELETE FROM review_replies WHERE id = :id AND org_id = :org_id');
+        $stmt->execute([':id' => $id, ':org_id' => $orgId]);
 
         return $stmt->rowCount() > 0;
     }

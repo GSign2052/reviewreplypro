@@ -10,23 +10,25 @@ require ROOT . '/app/ReviewReplyRepository.php';
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
+require ROOT . '/app/Middleware/requireAuthApi.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['error' => 'Method Not Allowed']);
+    echo json_encode(['success' => false, 'error' => 'Method Not Allowed']);
     exit;
 }
 
 $body = json_decode(file_get_contents('php://input'), true);
 if (!is_array($body)) {
     http_response_code(400);
-    echo json_encode(['error' => 'Ungültiges JSON.']);
+    echo json_encode(['success' => false, 'error' => 'Ungültiges JSON.']);
     exit;
 }
 
 $validator = new Validator();
 if (!$validator->validateReviewInput($body)) {
     http_response_code(422);
-    echo json_encode(['errors' => $validator->getErrors()]);
+    echo json_encode(['success' => false, 'errors' => $validator->getErrors()]);
     exit;
 }
 
@@ -41,6 +43,7 @@ try {
 
     $repo = new ReviewReplyRepository(Database::connect());
     $id   = $repo->save([
+        'org_id'      => $currentUser['org_id'],
         'review_text' => trim($body['review_text']),
         'industry'    => $body['industry'],
         'stars'       => (int)$body['stars'],
@@ -61,6 +64,6 @@ try {
     ]);
 } catch (Exception $e) {
     http_response_code(500);
-    $debug = require ROOT . '/config/app.php';
-    echo json_encode(['error' => $debug['debug'] ? $e->getMessage() : 'Serverfehler.']);
+    $cfg = require ROOT . '/config/app.php';
+    echo json_encode(['success' => false, 'error' => $cfg['debug'] ? $e->getMessage() : 'Serverfehler.']);
 }
