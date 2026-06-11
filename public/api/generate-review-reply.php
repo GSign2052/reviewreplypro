@@ -52,6 +52,7 @@ try {
     ]);
 
     echo json_encode([
+        'success'    => true,
         'id'         => $id,
         'reply_1'    => $result['reply_1'],
         'reply_2'    => $result['reply_2'],

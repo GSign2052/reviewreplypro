@@ -36,7 +36,7 @@
     });
 
     function updateGenerateBtn() {
-        generateBtn.disabled = reviewText.value.trim() === '' || selectedStars === 0;
+        generateBtn.disabled = reviewText.value.trim().length < 10 || selectedStars === 0;
     }
 
     // --- Generate ---

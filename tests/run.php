@@ -30,6 +30,20 @@ ok('Leerer Text wird abgelehnt', !$v->validateReviewInput([
     'tone'        => 'freundlich',
 ]));
 
+ok('Text unter 10 Zeichen wird abgelehnt', !$v->validateReviewInput([
+    'review_text' => 'Kurz',
+    'stars'       => 5,
+    'industry'    => 'Restaurant',
+    'tone'        => 'freundlich',
+]));
+
+ok('Text mit genau 10 Zeichen wird akzeptiert', $v->validateReviewInput([
+    'review_text' => '1234567890',
+    'stars'       => 5,
+    'industry'    => 'Restaurant',
+    'tone'        => 'freundlich',
+]));
+
 ok('Sternezahl 6 wird abgelehnt', !$v->validateReviewInput([
     'review_text' => 'Super Laden!',
     'stars'       => 6,

@@ -12,8 +12,8 @@ class Validator
         $this->errors = [];
 
         $text = trim($data['review_text'] ?? '');
-        if ($text === '') {
-            $this->errors[] = 'Bewertungstext darf nicht leer sein.';
+        if ($text === '' || mb_strlen($text) < 10) {
+            $this->errors[] = 'Bewertungstext muss mindestens 10 Zeichen lang sein.';
         } elseif (mb_strlen($text) > 2000) {
             $this->errors[] = 'Bewertungstext ist zu lang (max. 2000 Zeichen).';
         }
